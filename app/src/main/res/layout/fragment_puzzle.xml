@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.kimym.puzzle.util.TimeUtilKt" />
+
+        <variable
+            name="viewModel"
+            type="com.kimym.puzzle.presentation.puzzle.PuzzleViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.puzzle.PuzzleFragment">
+
+        <ImageButton
+            android:id="@+id/btn_puzzle_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_baseline_arrow_back_48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_puzzle_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_baseline_alarm_48"
+            app:layout_constraintEnd_toStartOf="@id/tv_puzzle_time"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_puzzle_back" />
+
+        <TextView
+            android:id="@+id/tv_puzzle_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:text="@{TimeUtilKt.timeToString(viewModel.time)}"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toStartOf="@id/btn_puzzle_pause"
+            app:layout_constraintStart_toEndOf="@id/img_puzzle_clock"
+            app:layout_constraintTop_toTopOf="@id/img_puzzle_clock" />
+
+        <ImageButton
+            android:id="@+id/btn_puzzle_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:importantForAccessibility="no"
+            android:onClick="@{() -> viewModel.setPause()}"
+            android:src="@drawable/ic_baseline_pause_48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_puzzle_time"
+            app:layout_constraintTop_toTopOf="@id/img_puzzle_clock" />
+
+        <TextView
+            android:id="@+id/tv_puzzle_moving_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@{@plurals/move_count(viewModel.movingCount, viewModel.movingCount)}"
+            android:textSize="28sp"
+            app:drawableStartCompat="@drawable/ic_baseline_swap_horizontal_48"
+            app:layout_constraintEnd_toEndOf="@id/tv_puzzle_time"
+            app:layout_constraintStart_toStartOf="@id/tv_puzzle_time"
+            app:layout_constraintTop_toBottomOf="@id/tv_puzzle_time" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_puzzle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:alpha="@{viewModel.isPause? 0.2f : 1f}"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_puzzle_moving_count" />
+
+        <ImageView
+            android:id="@+id/img_puzzle_pause"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:importantForAccessibility="no"
+            android:onClick="@{() -> viewModel.setPause()}"
+            android:src="@drawable/ic_baseline_pause_48"
+            android:visibility="@{viewModel.isPause? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/rv_puzzle"
+            app:layout_constraintEnd_toEndOf="@id/rv_puzzle"
+            app:layout_constraintStart_toStartOf="@id/rv_puzzle"
+            app:layout_constraintTop_toTopOf="@id/rv_puzzle"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

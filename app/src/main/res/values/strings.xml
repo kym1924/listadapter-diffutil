@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SlidePuzzle</string>
+    <string name="size_format">%d X %d</string>
+    <string name="game_start">Game Start</string>
+    <string name="congratulations">Congratulations</string>
+    <plurals name="move_count">
+        <item quantity="one">%d move</item>
+        <item quantity="other">%d moves</item>
+    </plurals>
+    <string name="again">Again</string>
+    <string name="again_bundle_key">againBundleKey</string>
+    <string name="new_game">New game</string>
+</resources>

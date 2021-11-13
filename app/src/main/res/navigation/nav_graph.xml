@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.kimym.puzzle.presentation.start.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start">
+        <action
+            android:id="@+id/action_startFragment_to_sizeBottomSheet"
+            app:destination="@id/sizeBottomSheet" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/sizeBottomSheet"
+        android:name="com.kimym.puzzle.presentation.size.SizeBottomSheet"
+        android:label="SizeBottomSheet"
+        tools:layout="@layout/layout_size_bottom_sheet">
+        <action
+            android:id="@+id/action_sizeBottomSheet_to_puzzleFragment"
+            app:destination="@id/puzzleFragment" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/puzzleFragment"
+        android:name="com.kimym.puzzle.presentation.puzzle.PuzzleFragment"
+        android:label="fragment_puzzle"
+        tools:layout="@layout/fragment_puzzle">
+        <argument
+            android:name="size"
+            app:argType="integer" />
+        <action
+            android:id="@+id/clearPuzzle"
+            app:destination="@id/clearFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clearFragment"
+        android:name="com.kimym.puzzle.presentation.clear.ClearFragment"
+        android:label="fragment_clear"
+        tools:layout="@layout/fragment_clear">
+        <argument
+            android:name="clearTime"
+            app:argType="string" />
+        <argument
+            android:name="clearMoveCount"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_clearFragment_to_startFragment"
+            app:destination="@id/startFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

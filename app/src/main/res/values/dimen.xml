@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="three_size">44sp</dimen>
+    <dimen name="four_size">36sp</dimen>
+    <dimen name="five_size">28sp</dimen>
+</resources>
