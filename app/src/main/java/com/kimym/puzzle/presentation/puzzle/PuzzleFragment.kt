@@ -1,10 +1,13 @@
 package com.kimym.puzzle.presentation.puzzle
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -87,6 +90,48 @@ class PuzzleFragment : Fragment() {
                 }
             }
         }
+
+        repeatOnLifecycle {
+            viewModel.isPause.collect { isPause ->
+                isPause?.let {
+                    val duration = resources.getInteger(android.R.integer.config_mediumAnimTime)
+                    startRvPuzzleAnimation(isPause, duration)
+                    startImagePauseAnimation(duration)
+                }
+            }
+        }
+    }
+
+    private fun startRvPuzzleAnimation(isPause: Boolean, duration: Int) {
+        binding.rvPuzzle.apply {
+            alpha = getAlphaForIsPause(isPause)
+            animate()
+                .alpha(getAlphaForIsPause(!isPause))
+                .setDuration(duration.toLong())
+                .setListener(null)
+        }
+    }
+
+    private fun startImagePauseAnimation(duration: Int) {
+        val alpha = binding.rvPuzzle.alpha
+        with(binding.imgPuzzlePause) {
+            animate()
+                .alpha(if (alpha == 1f) 1f else 0f)
+                .setDuration(duration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationStart(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+
+                    override fun onAnimationEnd(animation: Animator) {
+                        isVisible = (alpha == 1f)
+                    }
+                })
+        }
+    }
+
+    private fun getAlphaForIsPause(isPause: Boolean): Float {
+        return if (isPause) 1f else 0.2f
     }
 
     override fun onStop() {

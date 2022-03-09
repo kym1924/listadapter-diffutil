@@ -9,14 +9,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Collections
 import kotlin.math.sqrt
 
 class PuzzleViewModel : ViewModel() {
     private val _puzzle = MutableStateFlow<List<Int>>(listOf())
     val puzzle = _puzzle.asStateFlow()
 
-    private val _isPause = MutableStateFlow(false)
+    private val _isPause = MutableStateFlow<Boolean?>(null)
     val isPause = _isPause.asStateFlow()
 
     private val _time = MutableStateFlow<Long>(0)
@@ -71,20 +71,20 @@ class PuzzleViewModel : ViewModel() {
     }
 
     fun clearCheck() {
-        var isClear = true
-        for (i in _puzzle.value.indices) {
-            if (_puzzle.value[i] != i + 1) {
-                isClear = false
-                break
-            }
-        }
         viewModelScope.launch {
+            var isClear = true
+            for (i in _puzzle.value.indices) {
+                if (_puzzle.value[i] != i + 1) {
+                    isClear = false
+                    break
+                }
+            }
             _isClear.emit(isClear)
         }
     }
 
     fun setPause() {
-        _isPause.value = !(_isPause.value)
+        _isPause.value = if (_isPause.value == null) true else _isPause.value?.not()
         when (_isPause.value) {
             true -> job?.cancel()
             false -> job = getTime()
