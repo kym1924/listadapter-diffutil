@@ -15,7 +15,8 @@ class SizeAdapter(
 ) : ListAdapter<Int, SizeAdapter.SizeViewHolder>(
     BaseDiffUtilItemCallback(
         itemsTheSame = { oldItem, newItem -> oldItem == newItem },
-        contentsTheSame = { oldItem, newItem -> oldItem == newItem })
+        contentsTheSame = { oldItem, newItem -> oldItem == newItem }
+    )
 ) {
     init {
         submitList(listOf(3, 4, 5))

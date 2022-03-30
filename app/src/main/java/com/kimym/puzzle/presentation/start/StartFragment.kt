@@ -1,10 +1,10 @@
 package com.kimym.puzzle.presentation.start
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.kimym.puzzle.R
 import com.kimym.puzzle.databinding.FragmentStartBinding
 import com.kimym.puzzle.util.navigate

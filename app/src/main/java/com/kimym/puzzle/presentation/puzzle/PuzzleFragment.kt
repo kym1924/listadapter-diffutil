@@ -3,11 +3,11 @@ package com.kimym.puzzle.presentation.puzzle
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -81,12 +81,10 @@ class PuzzleFragment : Fragment() {
 
         repeatOnLifecycle {
             viewModel.isClear.collect { clear ->
-                when (clear) {
-                    true -> {
-                        val clearTime = binding.tvPuzzleTime.text.toString()
-                        val moveCount = viewModel.getMoveCount()
-                        navigate(PuzzleFragmentDirections.clearPuzzle(clearTime, moveCount))
-                    }
+                if (clear) {
+                    val clearTime = binding.tvPuzzleTime.text.toString()
+                    val moveCount = viewModel.getMoveCount()
+                    navigate(PuzzleFragmentDirections.clearPuzzle(clearTime, moveCount))
                 }
             }
         }
